@@ -14,9 +14,13 @@ class ViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let tableVC = segue.destination as! TableViewController
         if segue.identifier == "urlSegue" {
-            let tableVC = segue.destination as! TableViewController
             tableVC.fetchData()
+        } else if segue.identifier == "alamSegue" {
+            tableVC.fetchDataAlsmofire()
+        } else if segue.identifier == "postRequest" {
+            tableVC.postRequest()
         }
     }
 }

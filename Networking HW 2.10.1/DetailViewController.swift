@@ -30,7 +30,7 @@ class DetailViewController: UIViewController {
         contentArticle.text = article.content
         
         DispatchQueue.global().async {
-            guard let imageUrl = URL(string: article.urlToImage) else { return }
+            guard let imageUrl = URL(string: article.urlToImage ?? "https://elbuz.com/image/data/eg_products/news/er.png") else { return }
             guard let imageData = try? Data(contentsOf: imageUrl) else { return }
             
             DispatchQueue.main.async {
