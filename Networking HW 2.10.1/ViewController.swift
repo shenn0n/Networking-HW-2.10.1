@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         if segue.identifier == "urlSegue" {
             tableVC.fetchData()
         } else if segue.identifier == "alamSegue" {
-            tableVC.fetchDataAlsmofire()
+            tableVC.fetchDataWithAlsmofire()
         } else if segue.identifier == "postRequest" {
             tableVC.postRequest()
         }

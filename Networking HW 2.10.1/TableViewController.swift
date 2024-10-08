@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class TableViewController: UITableViewController {
     
@@ -54,22 +55,40 @@ class TableViewController: UITableViewController {
         }.resume()
         
     }
-    func fetchDataAlsmofire() {
+    func fetchDataWithAlsmofire() {
         
         guard let urlTwo = URL(string: jsonUrlTwo) else { return }
-        URLSession.shared.dataTask(with: urlTwo) { data, _, _ in
-            if let data = data {
-                do {
-                    let news = try JSONDecoder().decode(Welcome.self, from: data)
-                    self.articles = news.articles
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                } catch let error {
-                    print(error)
+        
+//        // устаревшее
+//        AF.request(urlTwo).responseJSON { dataResponse in
+//            guard let statusCode = dataResponse.response?.statusCode else { return }
+//
+//            // пример работы со статус кодом
+//            if (200..<300).contains(statusCode) {
+//                guard let value = dataResponse.value else { return }
+//                print(value)
+//            } else {
+//                guard let error = dataResponse.error else { return }
+//                print(error)
+//            }
+//
+//
+//        }
+        
+
+        AF.request(urlTwo).validate().responseDecodable(of: Welcome.self) { dataResponse in
+            
+            switch dataResponse.result {
+                case .success(let value):
+                self.articles = value.articles
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
                 }
+                print(value)
+                case .failure(let error):
+                    print(error)
             }
-        }.resume()
+        }
         
     }
     
